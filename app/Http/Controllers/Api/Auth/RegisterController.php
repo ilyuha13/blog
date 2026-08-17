@@ -18,7 +18,7 @@ class RegisterController extends Controller
         RegisterUserAction $action,
         ): JsonResponse {
             $result = $action->execute(
-               name: $request->validated('name'),
+                name: $request->validated('name'),
                 email: $request->validated('email'),
                 password: $request->validated('password'), 
             );
