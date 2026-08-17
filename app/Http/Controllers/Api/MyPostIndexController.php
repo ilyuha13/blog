@@ -3,22 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\PostIndexRequest;
+use App\Actions\Posts\ListPostsAction;
 use Illuminate\Http\JsonResponse;
 use App\Http\Resources\PostResource;
-use App\Actions\Posts\MineListPostAction;
 
 
-class MinePostIndexController extends Controller
+class MyPostIndexController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(PostIndexRequest $request, MineListPostAction $action): JsonResponse
+    public function __invoke(PostIndexRequest $request, ListPostsAction $action): JsonResponse
     {
         $posts = $action->execute(
-            userId: $request->user()->id,
+            user: $request->user(),
             limit: $request->limit(),
             offset: $request->offset(),
             dateFrom: $request->dateFrom(),
@@ -26,7 +25,6 @@ class MinePostIndexController extends Controller
             sortBy: $request->sortBy(),
             sortDirection: $request->sortDirection(),
         );
-
 
         return response()->json([
             'data' => PostResource::collection($posts['items']),

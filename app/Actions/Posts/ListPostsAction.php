@@ -3,6 +3,8 @@
 namespace App\Actions\Posts;
 
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 
 
 
@@ -15,8 +17,14 @@ class ListPostsAction
         ?string $dateTo = null,
         string $sortBy = 'created_at',
         string $sortDirection = 'desc',
+        ?User $user = null
     ): array {
         $query = Post::query();
+
+        if ($user) {
+            $user_id = $user->id;
+            $query->where('user_id', $user_id);
+        }
 
         if ($dateFrom) {
             $query->where('created_at', '>=', $dateFrom);

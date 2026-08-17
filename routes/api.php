@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Resources\UserResource;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\PostIndexController;
+use App\Http\Controllers\Api\MyPostIndexController;
 
 
 Route::post('/register', RegisterController::class);
@@ -21,7 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
         return new UserResource($request->user());
     });
 
-    Route::get('/posts/mine', \App\Http\Controllers\Api\MinePostIndexController::class);
+    Route::get('/my-posts', MyPostIndexController::class);
 
     Route::post('/logout', LogoutController::class);
 
